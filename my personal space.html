@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+           background:#efefef;
+           
+        }
+        #taskModal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+   
+    background:rgba(0,0,0,0.4);
+
+}
+#minusBtn{
+    position:relative;
+    width:60px;
+    top:40px;
+    left:60px;
+    height:60px;
+    border-radius:50%;
+    font-size:40px;
+    border:2px solid black;
+    
+}
+#taskModal div{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+#modalInput{
+    width:250px;
+    height:120px;
+    outline:none;
+    resize:none;
+}
+        #header{
+        display:flex;
+        
+            background:#00c0ff;
+            padding:2px;
+        }
+        .modal-buttons{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+}
+        nav img{
+            width:50px;
+            height:50px;
+            border:1px solid white;
+            border-radius:15px;
+            position:relative;
+            top:8px;
+        }
+        #name{
+        
+            display:inline;
+            position:relative;
+            bottom:10.7px;
+            border:1px solid white;
+            border-radius:0 5px 5px 0px;
+            background:#ef78cf;
+            margin-left:-4px;
+            color:white;
+            padding:0 5px 0 0;
+        }
+        #name2{
+            display:inline;
+            color:white;
+            position: relative;
+            bottom:10.7px;
+            left:32px;
+            background:#ef78cf;
+            border:1px solid white;
+            padding:0 5px 0 5px;
+            border-radius:5px 0 0 5px;
+        }
+        #sbarb{
+        border-radius:15px;
+            font-size:32px;
+            position:relative;
+            bottom:10.7px;
+            width:50px;
+            height:50px;
+            border:1px solid white;
+           left:27px;
+        }
+       .task-card{
+       background:#95b7ff;
+       color:Black;
+       font-size:25px;
+       position:relative;
+       border-radius:5px;
+          border:1px solid black;
+          margin-top:2px;
+          width:100%;
+          height:130px;
+          
+       }
+       #plusBtn{
+       font-size:40px;
+           position:relative;
+           left:165px;
+           top:40px;
+           width:60px ;
+           height:60px;
+           border:2px solid black;
+           border-radius:50%
+         
+       }
+       #closeCounter{
+       border-radius:5px;
+       background:#efefef;
+           position: absolute;
+           top:1.5px;
+           right:1.5px;
+       }
+       .a-btn{
+       background:#fff4d5;
+           position: absolute;
+           top:20px;
+           right:1.5px;
+           width:30px;
+           border:0.5px solid black;
+           
+       }
+       .pending{
+       color:white;
+    background:#39b31e;
+    transition:1s ease;
+}
+.done{
+color:white;
+    background:#400fb3;
+    transition:1s ease;
+}
+.stopped{
+
+    background:#95b7ff;
+    transition:1s ease;
+}
+       #taskContainer{
+      overflow:hidden;
+           display:grid;
+           grid-template-columns:repeat(2, 1fr);
+           gap:4px;
+       }
+       #addTaskBtn{
+           margin-top:2px;
+       }
+       #counterValue{
+           position:relative;
+           left:160px;
+           top:90px;
+           font-size:40px;
+           
+       }
+       .edit-btn{
+           position:absolute;
+           top:1.5px;
+           right:1.5px;
+           width:30px;
+           background:#fff4d5;
+           border:0.5px solid black;
+       }
+       .stop-btn{
+           position:absolute;
+           bottom:0px;
+           background:red;
+           color:white;
+           width:58px;
+           border:1px solid black;
+       }
+       .pending-btn{
+       background:green;
+       color:white;
+           position: absolute;
+           bottom:0px;
+           left:56px;
+           width:58px;
+           border:1px solid black;
+       }
+       .done-btn{
+       background:blue;
+       color:white;
+           position: absolute;
+           bottom:0px;
+           left:112px;
+           width:58px;
+           border:1px solid black;
+       }
+       .task-text{
+       
+    word-break: break-word;
+    overflow-wrap: break-word;
+overflow-y:auto;
+height:100px;
+           margin-right:40px;
+           margin-left:2px;
+       }
+       .task-top{
+           position:relative;
+       }
+       #counterPanel{
+position:fixed;
+bottom:-200px;
+left:0;
+width:100%;
+height:200px;
+background:white;
+transition:0.4s;
+}
+
+#counterPanel.show{
+bottom:0;
+}
+#ShafaiHeader{
+    border:1.3px solid black;
+    
+}
+#sidebar {
+    position: fixed;
+    left: -180px; /* hide initially */
+    top: 0;
+    width: 140px;
+    height: 100%;
+    background: #00c0ff;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+#sidebar.show {
+    left: 0;
+}
+#Tabsss{
+    position:absolute;
+    top:3px;
+    left:8px;
+    border:2px solid white;
+    border-radius:8px;
+    padding:3px;
+    background:#efefef;
+    color:black;
+}
+#allTabs{
+    position: relative;
+    top:40px;
+    left:-15px;
+    
+}
+
+#allTabs h2{border:1.5px solid white;
+margin:5px;
+    padding:2px;
+    border-radius:6px;
+    background:#ef78cf;
+    padding-left:7px;
+    }
+    .tab-content{
+display:none;
+}
+
+.tab-content.active{
+display:block;
+}
+.tab-btn{
+    transition:0.2s ease;
+}
+.tab-btn:active{
+    scale:1.1;
+}
+#Mazaahib{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    position: relative;
+    top:7px;        
+    gap:4px;
+}
+#cardd1, #cardd2, #cardd3, #cardd4{
+    width:100%;
+    background:#a580ff;
+    align-text:center;
+    border-radius:6px;
+    transition:0.3s ease;
+}
+#cardd1:active, #cardd2:active, #cardd3:active, #cardd4:active{
+    background:#b5aaff;
+    scale:1.08;
+}
+#ShafaiSearch{
+    border-radius:9px;
+    outline:none;
+    border:1px solid black;
+    scale:1.2;
+    position: relative;
+    left:15px;
+}
+#ShafaiFatawa{
+    margin-top:8px;
+    display:none;
+}
+#closeShafai{
+    background: #d5bfff;
+    border:1.5px solid black;
+    transition:0.3s ease;
+    border-radius:3px;
+    
+}
+#closeShafai:active{
+    
+    scale:1.05;
+}
+    </style>
+    <meta charset="UTF-8">
+    <title>Page title</title>
+</head>
+<body>
+    <div id="header">
+        <nav>
+           <img src="https://i.postimg.cc/vZc9p8M5/Screenshot-20260306-001557.jpg">
+           <h2 id="name">Arafat Hanafi</h2>
+           <h2 id="name2">KaaM</h2>
+           <button id="sbarb">☰</button>
+        </nav>
+    </div>
+<div id="sidebar">
+    <h2 id="Tabsss">DIFFERENT TABS</h2>
+    <div id="allTabs">
+    <h2 id="Tab1" class='tab-btn' data-tab="KaaMTab">KaaM</h2>
+    <h2 id="Tab2" class='tab-btn' data-tab="AssetsTab">Assets</h2>
+    <h2 id="Tab3" class='tab-btn' data-tab="IdeasTab">Ideas</h2>
+    <h2 id="Tab4" class='tab-btn' data-tab="fatawaTab">Fatawa</h2>
+    </div>
+</div>
+<div id="mainContent">
+    <div id="KaaMTab" class='tab-content active'>
+    <button id="addTaskBtn">Add Task</button>
+    <div id="taskContainer"></div>
+
+<div id="taskModal" style="display:none;">
+    <div>
+        <textarea id="modalInput" placeholder="Enter task"></textarea>
+        <div class="modal-buttons">
+        <button id="saveTask">OK</button>
+        <button id="closeModal">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="counterPanel">
+    <div id="counterContent">
+        <div id="counterValue">0</div>
+        <div class="counterButtons">
+            <button id="minusBtn">-</button>
+            <button id="plusBtn">+</button>
+            <button id="closeCounter">Close</button>
+        </div>
+    </div>
+</div>
+</div><!--kaamtab-->
+<div id="AssetsTab" class='tab-content'>
+    <h2>Assets</h2>
+
+</div><!--assets tab --->
+
+<div id="IdeasTab" class='tab-content'>
+    <h2>Ideas Tab</h2>
+
+</div><!--Ideas Tab --->
+
+<div id="fatawaTab" class='tab-content'>
+   
+   <div id="Mazaahib">
+       
+       <div id="cardd1">
+           <center>
+         <h2 id="Shafaii">Shafa'i</h2>
+    </center>
+       </div>
+       
+       <div id="cardd2">
+           <center>
+         <h2 id="Shafaii">Hanafi</h2>
+    </center>
+       </div>
+       <div id="cardd3">
+           <center>
+          
+         <h2 id="Shafaii">Maliki</h2>
+    </center>
+       </div>
+       <div id="cardd4">
+           <center>
+         <h2 id="Shafaii">Hambali</h2>
+    </center>
+       </div>
+       
+   </div>
+  <div id="ShafaiFatawa">
+      <div id="ShafaiHeader">
+      <button id="closeShafai">Back</button>
+      <input type="search" id="ShafaiSearch" placeholder='Search Fatawa'>
+      </div>
+      
+  </div>
+   
+   
+   
+   
+    
+     </div><!--Fatawa Tab--->
+
+     </div><!---main content--->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script src="taskbar.js"></script>
+
+</body>
+</html>
